@@ -1,26 +1,22 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { gql } from 'apollo-boost';
+import { Query } from 'react-apollo';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const App = () => (
+  <Query
+    query={gql`
+      {
+        nombre
+      }
+    `}
+  >
+    {({ loading, error, data }) => {
+      if (loading) return <p>Cargando...</p>
+      if (error) return <p>Error</p>
+
+      return data.nombre
+    }}
+  </Query>
+);
 
 export default App;
